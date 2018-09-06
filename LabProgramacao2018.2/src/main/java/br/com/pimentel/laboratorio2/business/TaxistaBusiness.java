@@ -1,14 +1,19 @@
 package br.com.pimentel.laboratorio2.business;
 
+import java.util.List;
+
 import br.com.pimentel.laboratorio2.model.Medico;
 import br.com.pimentel.laboratorio2.model.Profissao;
 import br.com.pimentel.laboratorio2.model.Taxista;
 import br.com.pimentel.laboratorio2.repository.ProfissaoRepository;
+import br.com.pimentel.laboratorio2.repository.TaxistaRepository;
 
 public class TaxistaBusiness extends Medico implements CalculosIR {
 
 	private ProfissaoRepository repository;
 	private Double desconto, ir, rendaAnual;
+	private TaxistaRepository taxistaRepository;
+	private List<Taxista> list;
 
 	@Override
 	public Double calculaRendaAnual(Profissao profissao) {
@@ -55,6 +60,24 @@ public class TaxistaBusiness extends Medico implements CalculosIR {
 		ir = (calculaRendaAnual(cpf) + (0.005 * taxista.getValorBens())) - calculaDescontoIR(taxista);
 		return ir;
 	}
+	
+	@Override
+	public Boolean calculaMalhaFina(Profissao profissao) {
+		taxistaRepository = new TaxistaRepository();
+		list = taxistaRepository.findAll();
+		Double somaTodosValorBens = 0.0;
+		for (Taxista taxista : list) {
+			somaTodosValorBens =+ taxista.getValorBens();
+		}
+		Double mediaValorBens = somaTodosValorBens/list.size();
+		if ((profissao.getValorBens() * 1.5) >= mediaValorBens) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}	
+
 	
 
 }

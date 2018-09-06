@@ -15,5 +15,7 @@ public interface CalculosIR {
 	public Double calculaIR(Profissao profissao);
 
 	public Double calculaIR(String cpf);
+	
+	public Boolean calculaMalhaFina(Profissao profissao);
 
 }

@@ -40,4 +40,42 @@ public class Taxista extends Profissao implements Rodoviario {
 		this.numeroPassageiros = numeroPassageiros;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((kmPercorrido == null) ? 0 : kmPercorrido.hashCode());
+		result = prime * result + ((numeroPassageiros == null) ? 0 : numeroPassageiros.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Taxista other = (Taxista) obj;
+		if (kmPercorrido == null) {
+			if (other.kmPercorrido != null)
+				return false;
+		} else if (!kmPercorrido.equals(other.kmPercorrido))
+			return false;
+		if (numeroPassageiros == null) {
+			if (other.numeroPassageiros != null)
+				return false;
+		} else if (!numeroPassageiros.equals(other.numeroPassageiros))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Taxista [kmPercorrido=" + kmPercorrido + ", numeroPassageiros=" + numeroPassageiros + "]";
+	}
+	
+	
+
 }

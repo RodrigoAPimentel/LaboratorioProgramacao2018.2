@@ -1,13 +1,18 @@
 package br.com.pimentel.laboratorio2.business;
 
+import java.util.List;
+
 import br.com.pimentel.laboratorio2.model.Professor;
 import br.com.pimentel.laboratorio2.model.Profissao;
+import br.com.pimentel.laboratorio2.repository.ProfessorRepository;
 import br.com.pimentel.laboratorio2.repository.ProfissaoRepository;
 
 public class ProfessorBusiness extends Professor implements CalculosIR {
 
 	private ProfissaoRepository repository;
 	private Double desconto, ir;
+	private ProfessorRepository professorRepository;
+	private List<Professor> list;
 	
 	@Override
 	public Double calculaRendaAnual(Profissao profissao) {
@@ -78,5 +83,22 @@ public class ProfessorBusiness extends Professor implements CalculosIR {
 			return ir;
 		}
 	}
+
+	@Override
+	public Boolean calculaMalhaFina(Profissao profissao) {
+		professorRepository = new ProfessorRepository();
+		list = professorRepository.findAll();
+		Double somaTodosValorBens = 0.0;
+		for (Professor professor : list) {
+			somaTodosValorBens =+ professor.getValorBens();
+		}
+		Double mediaValorBens = somaTodosValorBens/list.size();
+		if ((profissao.getValorBens() * 1.5) >= mediaValorBens) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}	
 
 }
